@@ -6,7 +6,7 @@
       @click="onToggleFlipCard"
     >
       <div class="card__face card__face--front">
-        <div class="card__content">Front</div>
+        <div class="card__content"></div>
       </div>
       <div class="card__face card__face--back">
         <div class="card__content">Back</div>
@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       isFlipped: false,
+      isDisabled: false,
     };
   },
   methods: {
@@ -60,7 +61,15 @@ export default {
   overflow: hidden;
   border-radius: 1rem;
   padding: 1rem;
-  box-shadow: 0 3px 18px 3px rgba(231, 8, 8, 0.2);
+  box-shadow: 0 3px 18px 3px rgba(75, 62, 62, 0.2);
+}
+
+.card__face--front .card__content {
+  background: url("../assets/images/icon_back.png");
+  background-repeat: no-repeat;
+  background-size: 70% 50%;
+  height: 100%;
+  height: 100%;
 }
 
 .card__face--back {
