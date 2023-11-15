@@ -26,6 +26,7 @@ export default {
   data() {
     return {
       rules: [],
+      count: 0,
     };
   },
   methods: {
@@ -38,13 +39,24 @@ export default {
         this.rules[0].value == this.rules[1].value
       ) {
         console.log("Right...");
+        this.$refs[`card-${this.rules[0].index}`][0].onDisableMode();
+        this.$refs[`card-${this.rules[1].index}`][0].onDisableMode();
+        this.rules = [];
+        this.count++;
+        if (this.count === this.cardsContext.length / 2) {
+          setTimeout(() => {
+            this.$emit("onFinish");
+          }, 920);
+        }
       } else if (
         this.rules.length === 2 &&
         this.rules[0].value !== this.rules[1].value
       ) {
-        this.$refs[`card-${this.rules[0].index}`][0].onFlipBackCard();
-        this.$refs[`card-${this.rules[1].index}`][0].onFlipBackCard();
-        this.rules = [];
+        setTimeout(() => {
+          this.$refs[`card-${this.rules[0].index}`][0].onFlipBackCard();
+          this.$refs[`card-${this.rules[1].index}`][0].onFlipBackCard();
+          this.rules = [];
+        }, 800);
       } else return false;
     },
   },
