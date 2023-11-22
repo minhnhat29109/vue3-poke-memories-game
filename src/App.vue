@@ -6,14 +6,21 @@
   <interact-screen
     v-if="statusMatch === 'match'"
     :cardsContext="settings.cardsContext"
+    @onFinish="onGetResult"
   />
-  <result-screen v-if="statusMatch === 'result'" :timer="timer" />
+  <result-screen
+    v-if="statusMatch === 'result'"
+    :timer="timer"
+    @onStartAgain="statusMatch = 'default'"
+  />
+  <coppy-right-screen />
 </template>
 
 <script>
 import MainScreen from "./components/MainScreen.vue";
 import InteractScreen from "./components/InteractScreen.vue";
 import ResultScreen from "./components/ResultScreen.vue";
+import CoppyRightScreen from "./components/CoppyRightScreen.vue";
 import { shuffled } from "./utils/array";
 export default {
   name: "App",
@@ -21,6 +28,7 @@ export default {
     MainScreen,
     InteractScreen,
     ResultScreen,
+    CoppyRightScreen,
   },
   data() {
     return {
@@ -35,7 +43,7 @@ export default {
   },
   methods: {
     onHandleBeforeStart(config) {
-      console.log("Running with config: ", config);
+      console.log(config);
       this.settings.totalOfBlocks = config.totalOfBlocks;
       const firstCards = Array.from(
         { length: this.settings.totalOfBlocks / 2 },
@@ -48,6 +56,7 @@ export default {
       );
       this.settings.startedAt = new Date().getTime();
       this.statusMatch = "match";
+      console.log(this.statusMatch);
     },
     onGetResult() {
       this.timer = new Date().getTime() - this.settings.startedAt;
